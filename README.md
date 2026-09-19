@@ -45,28 +45,25 @@
 - 🛡️ **Graceful shutdown** — workers drain, timers stop, the database closes cleanly
 - 🧪 **E2E tested** — every user journey is asserted end to end before release
 
-## 🔍 How it works
+## 🤖 Live demo
 
-1. **Creator drops media** in a chat with the bot (only admins — everyone else is silently ignored).
-2. The bot replies with a **5-char code + deep link**, e.g. `A7KQ2`.
-3. **Fans redeem** via `/start A7KQ2` or the link. If a join gate is configured, they join the required chats first through personal one-time invite links.
-4. Media arrives under spoiler, the view is counted, and when the code expires the **worker deletes every trace**.
+Try the fan flow right now — no install, just Telegram:
 
-```mermaid
-flowchart TD
-    Upload["Creator sends photo / video / album"] --> Stored["Stored under one 5-char code"]
-    Stored --> ReplyCode["Bot replies with the code + deep link"]
-    ReplyCode --> Redeem["Fan sends /start CODE or taps the link"]
-    Redeem --> Gate{"Join gate\nconfigured?"}
-    Gate -- "Yes" --> Join["Fan joins via one-time links,\ntaps I've-joined"]
-    Gate -- "No" --> Media
-    Join --> Media["Media re-sent with spoiler"]
-    Media --> Expiry["Code expires → worker\ndeletes the evidence"]
-```
+1. Open [SECURITY_DATA](https://t.me/YOUR_DEMO_BOT) _(replace with your demo bot)_
+2. Send `/start DEMO1` (or tap the deep link the demo bot shows)
+3. Pass the gate if one is configured, receive the media under spoiler
 
-### Join gate without hand-editing config
+<!-- TODO(owner): point the link above at a real demo bot before publishing. -->
 
-Promote the bot to admin in any group/channel and it asks the admins (right inside Telegram) whether to gate on it. Accept, and it mints the invite links, writes the config itself, and keeps the links rotated forever. Demote it and the chat drops off the gate automatically.
+## 💰 Pricing
+
+One-time commercial license per bot instance:
+
+- Full source code + this configuration template
+- Setup guidance for polling, webhook, or serverless deploys
+- The `.env.example` in this repo documents all 30 options
+
+Final price and payment terms are agreed directly — no storefront cut, no subscription.
 
 ## 🚀 Get the bot
 
@@ -94,24 +91,6 @@ Everything is tuned through environment variables (see [`.env.example`](./.env.e
 
 Gate chats, invite links, and backups can additionally be managed from inside Telegram itself — no restarts, no redeploys.
 
-## 🚢 Deployment
-
-- **Development** — `TELEGRAM_BOT_DEPLOY=polling` with file watching.
-- **Production (webhook)** — point `TELEGRAM_BOT_DEPLOY` at a public URL behind a process manager (`systemd`, `pm2`).
-- **Serverless** — adapters for Lambda / Cloudflare Workers style runtimes.
-- **Backup** — scheduled live snapshots (single-file `tar.gz` or raw dir) with retention, plus verified upload to S3-compatible storage.
-- **Logs** — stdout by default with optional rotating log files.
-
-## 🩺 Troubleshooting
-
-| Symptom | Likely cause | Fix |
-| :------ | :----------- | :-- |
-| `401 Unauthorized` on startup | Bad/revoked token | Regenerate at [@BotFather](https://t.me/BotFather) |
-| `409 Conflict` (`terminated by other getUpdates`) | Two instances polling with the same token | Run exactly one; check for stale processes |
-| Bot ignores your media | Your ID is not in `BOT_ADMIN_IDS` | Add it (JSON array of numbers, not strings) |
-| Codes expire instantly | `CONTENT_EXPIRY_MS` too low or clock skew | Raise the value; check system time |
-| Gate links invalid | Invite TTL elapsed or bot lost admin rights | Re-check admin rights; tune the TTL |
-
 ## 🧰 Tech Stack
 
 - [Gramstax](https://github.com/gramstax/gramstax) `2.x` — declarative Telegram bot framework
@@ -121,10 +100,31 @@ Gate chats, invite links, and backups can additionally be managed from inside Te
 - [@aws-sdk/client-s3](https://www.npmjs.com/package/@aws-sdk/client-s3) `^3` — S3-compatible backup upload
 - TypeScript in strict mode
 
-## 📚 Learn More
+## ❓ FAQ
 
-- [Gramstax Documentation](https://github.com/gramstax/gramstax)
-- [Telegram Bot API](https://core.telegram.org/bots/api)
+**Is the source code included?**
+No — this repo is the showcase. The full source is licensed separately (see [Get the bot](#-get-the-bot)).
+
+**What do I need to run it?**
+[Bun](https://bun.sh), a VPS or any always-on machine, and a bot token from [@BotFather](https://t.me/BotFather). No database server to operate — storage is embedded, backups are built in.
+
+**Polling or webhook?**
+Both, plus serverless adapters. Polling fits most creator bots; webhooks fit high-traffic ones. It is one environment variable either way.
+
+**Do fans need to join my channel first?**
+Only if you configure the join gate. Promote the bot to admin, tap Add, and it mints personal one-time invite links by itself. No gate configured means codes work instantly.
+
+**What happens when a code expires?**
+It stops redeeming and the worker deletes every delivered copy it can reach, then reports leftovers in your admin panel.
+
+**Can I ban someone?**
+Yes — per-user bans from the admin panel, enforced silently on every entry point.
+
+**Which languages do fans see?**
+English and Indonesian, picked automatically from the fan's Telegram language.
+
+**Are my backups safe?**
+Snapshots run on schedule with retention, optionally uploaded to any S3-compatible storage (R2, AWS, MinIO) with verified PUTs. Upload failures never delete the local file.
 
 ## 📄 License
 
