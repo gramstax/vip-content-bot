@@ -74,10 +74,7 @@ Final price and payment terms are agreed directly — no storefront cut, no subs
 
 VIP Content Bot is commercial, closed-source software:
 
-- 💬 Telegram: [SECURITY_DATA](https://t.me/YOUR_USERNAME) _(replace with your username)_
-- 📧 Email: [SECURITY_DATA] _(replace with your email)_
-
-<!-- TODO(owner): put the real contact above before publishing. -->
+- 💬 Telegram: [damar](https://t.me/damartripamungkas) _(replace with your username)_
 
 You receive the full source, the `.env.example` in this repo, and setup guidance.
 
