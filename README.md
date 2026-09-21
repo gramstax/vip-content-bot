@@ -50,6 +50,8 @@
 - 🛡️ **Graceful shutdown** — `SIGINT`/`SIGTERM` drain the worker, stop timers, and close the DB
 - ✅ **E2E tested** — in-process harness asserts every Telegram API call (`e2e/` mirrors `src/pages/`)
 
+<!--
+================== DEMO NOT READY SO COMMENT THIS SECTION ==================
 ## 🤖 Live demo
 
 Try the fan flow right now — no install, just Telegram:
@@ -57,8 +59,7 @@ Try the fan flow right now — no install, just Telegram:
 1. Open [SECURITY_DATA](https://t.me/YOUR_DEMO_BOT) _(replace with your demo bot)_
 2. Send `/start DEMO1` (or tap the deep link the demo bot shows)
 3. Pass the gate if one is configured, receive the media under spoiler
-
-<!-- TODO(owner): point the link above at a real demo bot before publishing. -->
+-->
 
 ## 💰 Pricing
 
@@ -74,34 +75,34 @@ Final price and payment terms are agreed directly — no storefront cut, no subs
 
 VIP Content Bot is commercial, closed-source software:
 
-- 💬 Telegram: [damar](https://t.me/damartripamungkas) _(replace with your username)_
+- 💬 Telegram: [damar](https://t.me/damartripamungkas)
 
 You receive the full source, the full configuration reference, and setup guidance.
 
 ## ❓ FAQ
 
-**Is the source code included?**
+1. **Is the source code included?**
 No — this repo is the showcase. The full source is licensed separately (see [Get the bot](#-get-the-bot)).
 
-**What do I need to run it?**
+2. **What do I need to run it?**
 [Bun](https://bun.sh), a VPS or any always-on machine, and a bot token from [@BotFather](https://t.me/BotFather). No database server to operate — storage is embedded, backups are built in.
 
-**Polling or webhook?**
+3. **Polling or webhook?**
 Both, plus serverless adapters. Polling fits most creator bots; webhooks fit high-traffic ones. It is one environment variable either way.
 
-**Do fans need to join my channel first?**
+4. **Do fans need to join my channel first?**
 Only if you configure the join gate. Promote the bot to admin, tap Add, and it mints personal one-time invite links by itself. No gate configured means codes work instantly.
 
-**What happens when a code expires?**
+5. **What happens when a code expires?**
 It stops redeeming and the worker deletes every delivered copy it can reach, then reports leftovers in your admin panel.
 
-**Can I ban someone?**
+6. **Can I ban someone?**
 Yes — per-user bans from the admin panel, enforced silently on every entry point.
 
-**Which languages do fans see?**
+7. **Which languages do fans see?**
 English and Indonesian, picked automatically from the fan's Telegram language.
 
-**Are my backups safe?**
+8. **Are my backups safe?**
 Snapshots run on schedule with retention, optionally uploaded to any S3-compatible storage (R2, AWS, MinIO) with verified PUTs. Upload failures never delete the local file.
 
 ## 📄 License
