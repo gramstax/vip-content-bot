@@ -66,7 +66,7 @@ One-time commercial license per bot instance:
 
 - Full source code + configuration template (all 30 options)
 - Setup guidance for polling, webhook, or serverless deploys
-- The `.env.example` in this repo documents every option
+- Full configuration reference for all 30 options
 
 Final price and payment terms are agreed directly — no storefront cut, no subscription.
 
@@ -76,7 +76,7 @@ VIP Content Bot is commercial, closed-source software:
 
 - 💬 Telegram: [damar](https://t.me/damartripamungkas) _(replace with your username)_
 
-You receive the full source, the `.env.example` in this repo, and setup guidance.
+You receive the full source, the full configuration reference, and setup guidance.
 
 ## ❓ FAQ
 
